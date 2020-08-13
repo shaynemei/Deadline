@@ -1,6 +1,9 @@
+"""
+Initialise flask instance and define routes.
+"""
+
 from flask import Flask
 from flask import render_template
-from firebase_admin import auth
 from . import db
 from . import auth_server
 
@@ -20,6 +23,7 @@ def hello():
     return "Hello World!"
 
 
+# Root page
 @app.route('/', methods=["GET"])
 def index():
     return render_template('index.html')

@@ -1,3 +1,7 @@
+"""
+functions related to user authentication.
+"""
+
 from flask import render_template
 from flask import request
 from firebase_admin import auth
