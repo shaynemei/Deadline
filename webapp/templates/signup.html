@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <body onload="onLoad()">
+    <div class="content">
+      
+      <div class="card text-secondary mt-5 w-50 mx-auto">
+        <div id="content" class="mx-auto">
+          <div class="mx-auto text-center mt-5">
+            <h1>DEADlines</h1>
+            <div>
+              <h2>Sign Up</h2>
+            </div>
+          </div>
+          <br/>
+          <!-- <form>
+            <label for="name">Nickname:</label><br>
+            <input type="text" id="name"><br><br>
+            <label for="group">Enter Group ID:</label><br>
+            <input type="text" id="group"><br>
+            <label for="ngroup">or create a new group:</label><br>
+            <input type="text" id="ngroup">
+            <br>
+            <input type="submit">
+          </form> -->
+
+          <!-- <form>
+            <div class="form-group">
+              <label for="nickname">Nickname</label>
+              <small id="emailHelp" class="form-text text-muted">This is the name other players will see.</small>
+            </div>
+            <div class="form-group">
+              <label for="group">Enter Group ID</label>
+              <input class="form-control" id="group">
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form> -->
+
+          <div class="d-flex">
+
+              <div class="col-md-6 align-self-center">
+                <form>
+                  <div class="form-group">
+                    <label for="nickname">Nickname</label>
+                    <input class="form-control" id="nickname">
+                  </div>
+                  <br>
+                  <div>
+                    <div class="form-group">
+                      <label for="group-type">Join or create a group:</label>
+                      <small class="form-text text-muted">
+                        Are you joining an existing group, or creating a new group?
+                      </small>
+                      <select id="group-type" class="form-control">
+                        <option selected>Join</option>
+                        <option>Create</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="group">Group Name</label>
+                      <input class="form-control" id="group">
+                    </div>
+                  </div>
+
+                  <a href="signup" class="btn btn-dark mb-5 mx-auto" role="button">Sign Up</a>
+                </form>
+              </div>
+
+              <div class="mx-auto align-self-center">
+                <h2>Join us.</h2>
+                <p>
+                  Fight the dead...
+                  <br>
+                  and the deadlines...
+                </p>
+              </div>
+
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+{% endblock %}

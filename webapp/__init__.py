@@ -37,6 +37,10 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
+    @app.route('/signup')
+    def signup():
+        return render_template('signup.html')
+
     from . import db
     db.init_app(app)
 
