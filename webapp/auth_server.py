@@ -37,8 +37,8 @@ def signup():
                 password=password
             )
             return {'message': f'Successfully created user {user.uid}'}, 200
-        except Exception as e:
-            return {'message': e}, 400
+        except auth.EmailAlreadyExistsError:
+            return {'message': "The user with the provided email already exists."}, 400
     else:
         # TODO: signup page not created
         # renders index page for now
