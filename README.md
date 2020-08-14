@@ -4,7 +4,7 @@ Deadline is a to-do list webapp in a group setting to boost productivity!
 
 ## Virtual Environment
 We recommend doing server development in a Python3.7 environment.
-Everything should be run in the Deadlinee root directory.
+Run the following commands in the Deadline root directory.
 ```
 python3 -m venv venv/sloth
 ```

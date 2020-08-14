@@ -1,17 +1,33 @@
 {% extends 'base.html' %}
 
+<!doctype html>
+<title>Deadline {% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 {% block content %}
-    <div class="card mx-auto landing-card">
-      <div class="card-body d-flex flex-column">
-        <h1 class="card-title">{% block title %} DEADline {% endblock %}</h1>
-        <!-- <a href="/signup" class="card-text">Sign up</a> -->
-        <div>
-          Fight the dead—one task at a time
-        </div>
-        <div class="mt-auto">
-          <a class="btn btn-dark">Log In</a>
-          <a href="signup" class="btn btn-dark" role="button">Sign Up</a>
-        </div>
-      </div>
-    </div>
+<nav>
+  <h1>Deadline</h1>
+  <ul>
+    {% if g.user %}
+      <li><span>{{ g.user['email'] }}</span>
+      <li><a href="{{ url_for('logout') }}">Log Out</a>
+    {% else %}
+      <li><a href="{{ url_for('signup') }}">Sign up</a>
+      <li><a href="{{ url_for('login') }}">Log In</a>
+    {% endif %}
+  </ul>
+</nav>
+<br></br>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+</section>
+
+{% include "landing.html" %}
+
 {% endblock %}
+

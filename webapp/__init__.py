@@ -1,47 +1,56 @@
-import os
-from flask import Flask, render_template
+"""
+Initialise flask instance and define routes.
+"""
+
+from flask import Flask
+from flask import render_template
+from flask import session
+from flask import redirect
+from flask import url_for
+
+from . import db
+from . import auth_server
+from . import status_server
+
+import secrets
 
 
-def create_app(test_config=None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+# init the app instance
+app = Flask(__name__)
 
-    # Todo: SECRET_KEY should be overridden with a random value when deploying, e.g. a long random string of bytes
-    app.config.from_mapping(
-        # for signing session cookies or any other security related needs by extensions or your application
-        # set to 'dev' for development convenience
-        SECRET_KEY='dev',
-        # Path to database file
-        DATABASE=os.path.join(app.instance_path, 'webapp.sqlite'),
-    )
+# set random secret key
+secret = secrets.token_urlsafe(32)
+app.secret_key = secret
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+# init connection to Firebase
+# pb is used for db operations
+# firebase is an admin sdk for validating tokens
+# firebase, pb = db.init_db()
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
-    # a hello page for testing
-    @app.route('/hello')
-    def hello():
-        return "Hello World!"
+# Root page
+@app.route('/', methods=["GET"])
+def index():
+    return render_template('index.html')
 
-    @app.route('/')
-    def index():
-        return render_template('index.html')
 
-    @app.route('/signup')
-    def signup():
-        return render_template('signup.html')
+@app.route('/signup', methods=["GET", "POST"])
+def signup():
+    return auth_server.signup()
 
-    from . import db
-    db.init_app(app)
 
-    return app
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    return auth_server.login(pb)
+
+
+@app.route('/logout', methods=["GET"])
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+
+@auth_server.check_token
+@app.route('/status', methods=["GET", "POST"])
+def status():
+    return status_server.status(pb)

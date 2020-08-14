@@ -15,8 +15,5 @@ export PYTHONPATH=${PYTHONPATH}:$PWD:
 # Set flask environment variable
 export FLASK_APP=webapp
 
-# Init local SQLite database
-flask init-db
-
 # Run webapp locally
 flask run
