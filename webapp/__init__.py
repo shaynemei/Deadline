@@ -4,23 +4,28 @@ Initialise flask instance and define routes.
 
 from flask import Flask
 from flask import render_template
+from flask import session
+from flask import redirect
+from flask import url_for
+
 from . import db
 from . import auth_server
+from . import status_server
+
+import secrets
 
 
 # init the app instance
 app = Flask(__name__)
 
+# set random secret key
+secret = secrets.token_urlsafe(32)
+app.secret_key = secret
+
 # init connection to Firebase
 # pb is used for db operations
 # firebase is an admin sdk for validating tokens
 firebase, pb = db.init_db()
-
-
-# a hello page for testing
-@app.route('/hello', methods=["GET"])
-def hello():
-    return "Hello World!"
 
 
 # Root page
@@ -29,20 +34,23 @@ def index():
     return render_template('index.html')
 
 
-# Test route to check token
-@app.route('/api/userinfo', methods=["GET"])
-@auth_server.check_token
-def userinfo():
-    return auth_server.userinfo()
-
-
-# Api route to sign up a new user
-@app.route('/api/signup', methods=["GET", "POST"])
+@app.route('/signup', methods=["GET", "POST"])
 def signup():
     return auth_server.signup()
 
 
-# Api route to get a new token for a valid user
-@app.route('/api/token', methods=["POST"])
-def token():
-    return auth_server.token(pb)
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    return auth_server.login(pb)
+
+
+@app.route('/logout', methods=["GET"])
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+
+@auth_server.check_token
+@app.route('/status', methods=["GET", "POST"])
+def status():
+    return status_server.status(pb)
