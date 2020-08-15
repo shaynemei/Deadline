@@ -6,12 +6,12 @@ Deadline is a to-do list webapp in a group setting to boost productivity!
 We recommend doing server development in a Python3.7 environment.
 Run the following commands in the Deadline root directory.
 ```
-python3 -m venv venv/sloth
+python3 -m venv venv/deadline
 ```
 
-Activate your Sloth virtual environment:
+Activate your Deadline virtual environment:
 ```
-source venv/sloth/bin/activate
+source venv/deadline/bin/activate
 ```
 
 ## Installation
