@@ -11,8 +11,8 @@
       <li><span>{{ g.user['email'] }}</span>
       <li><a href="{{ url_for('logout') }}">Log Out</a>
     {% else %}
-      <li><a href="{{ url_for('signup') }}">Sign up</a>
-      <li><a href="{{ url_for('login') }}">Log In</a>
+      <!-- <li><a href="{{ url_for('signup') }}">Sign up</a>
+      <li><a href="{{ url_for('login') }}">Log In</a> -->
       {% include "landing.html" %}
     {% endif %}
 </nav>
