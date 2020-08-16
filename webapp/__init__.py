@@ -53,4 +53,4 @@ def logout():
 @auth_server.check_token
 @app.route('/status', methods=["GET", "POST"])
 def status():
-    return status_server.status(pb)
+    return status_server.status()

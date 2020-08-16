@@ -56,7 +56,7 @@ def signup():
             _, error, _ = sys.exc_info()
 
         if not error:
-            add_user(user.uid, nickname, group, join)
+            add_user(email, user.uid, nickname, group, join)
             return redirect(url_for("login"))
 
         # show error message
@@ -65,7 +65,7 @@ def signup():
     return render_template("signup.html")
 
 
-def add_user(id, name, group, join):
+def add_user(email, id, name, group, join):
     db = webapp.pb.database()
 
     if join:
@@ -82,6 +82,12 @@ def add_user(id, name, group, join):
           }
         }
       })
+    db.child('users').update({
+      id: {
+        'nickname': name,
+        'group': group
+      }
+    })
 
 
 # Log in existing user
