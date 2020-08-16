@@ -25,7 +25,7 @@ app.secret_key = secret
 # init connection to Firebase
 # pb is used for db operations
 # firebase is an admin sdk for validating tokens
-# firebase, pb = db.init_db()
+firebase, pb = db.init_db()
 
 
 # Root page

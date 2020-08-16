@@ -43,10 +43,22 @@
           <div class="d-flex">
 
               <div class="col-md-6 align-self-center">
-                <form>
+                <form method="post" enctype="multipart/form-data">
                   <div class="form-group">
                     <label for="nickname">Nickname</label>
-                    <input class="form-control" id="nickname">
+                    <input class="form-control" id="nickname" name="nickname" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" id="email" name="email" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                   </div>
                   <br>
                   <div>
@@ -55,18 +67,18 @@
                       <small class="form-text text-muted">
                         Are you joining an existing group, or creating a new group?
                       </small>
-                      <select id="group-type" class="form-control">
-                        <option selected>Join</option>
-                        <option>Create</option>
+                      <select class="form-control" id="group-type" name="group-type" required>
+                        <option name="join" id="join" selected>Join</option>
+                        <option name="create" id="create">Create</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="group">Group Name</label>
-                      <input class="form-control" id="group">
+                      <input class="form-control" id="group" name="group" required>
                     </div>
                   </div>
-
-                  <a href="signup" class="btn btn-dark mb-5 mx-auto" role="button">Sign Up</a>
+                  <input type="submit" class="btn btn-dark mb-5 mx-auto" value="Sign Up">
+                  <!-- <a href="signup" class="btn btn-dark mb-5 mx-auto" role="button">Sign Up</a> -->
                 </form>
               </div>
 

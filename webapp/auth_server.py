@@ -10,10 +10,13 @@ from flask import url_for
 from flask import flash
 from flask import g
 
+import pyrebase
 from firebase_admin import auth
 from functools import wraps
 
 import sys
+
+import webapp
 
 
 # middleware to make sure only valid users can perform CRUD
@@ -29,9 +32,13 @@ def check_token(view):
 # Sign up a new user
 def signup():
     if request.method == "POST":
+        nickname = request.form.get('nickname')
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
+        print(request.form.get('group-type'))
+        join = True if request.form.get('group-type') == "Join" else False
+        group = request.form.get('group')
         error = None
         if not email:
             error = "Email is required"
@@ -41,7 +48,7 @@ def signup():
             error = "Password doesn't match."
 
         try:
-            auth.create_user(
+            user = auth.create_user(
                 email=email,
                 password=password
             )
@@ -49,12 +56,32 @@ def signup():
             _, error, _ = sys.exc_info()
 
         if not error:
+            add_user(user.uid, nickname, group, join)
             return redirect(url_for("login"))
 
         # show error message
         flash(error)
 
     return render_template("signup.html")
+
+
+def add_user(id, name, group, join):
+    db = webapp.pb.database()
+
+    if join:
+      db.child('groups').child(group).update({
+        id: {
+          'nickname': name
+        }
+      })
+    else:
+      db.child('groups').update({
+        group: {
+          id: {
+            'nickname': name
+          }
+        }
+      })
 
 
 # Log in existing user

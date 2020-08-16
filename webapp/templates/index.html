@@ -6,16 +6,15 @@
 
 {% block content %}
 <nav>
-  <h1>Deadline</h1>
-  <ul>
     {% if g.user %}
+      <h1>Deadline</h1>
       <li><span>{{ g.user['email'] }}</span>
       <li><a href="{{ url_for('logout') }}">Log Out</a>
     {% else %}
       <li><a href="{{ url_for('signup') }}">Sign up</a>
       <li><a href="{{ url_for('login') }}">Log In</a>
+      {% include "landing.html" %}
     {% endif %}
-  </ul>
 </nav>
 <br></br>
 <section class="content">
@@ -27,7 +26,6 @@
   {% endfor %}
 </section>
 
-{% include "landing.html" %}
 
 {% endblock %}
 
