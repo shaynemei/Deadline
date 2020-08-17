@@ -1,3 +1,9 @@
 /venv/
-/.idea
+/.idea/
 __pycache__
+/instance/
+/.coverage
+/htmlcov/
+/firebaseAdminConfig.json
+/firebaseConfig.json
+/temp_token.json

@@ -12,8 +12,11 @@ source venv/deadline/bin/activate || exit 1;
 # set python path variable
 export PYTHONPATH=${PYTHONPATH}:$PWD:
 
-# Set flask environment variable
-export FLASK_APP=webapp
+# run pytest
+pytest "$1"
 
-# Run webapp locally
-flask run
+# check coverage
+coverage report
+
+# show in html which lines were covered
+coverage html
