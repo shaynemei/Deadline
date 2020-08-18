@@ -54,3 +54,8 @@ def logout():
 @app.route('/status', methods=["GET", "POST"])
 def status():
     return status_server.status()
+
+
+@app.route('/tasks', methods=["GET", "POST"])
+def tasks():
+    return status_server.tasks()

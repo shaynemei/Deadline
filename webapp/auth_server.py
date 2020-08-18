@@ -36,7 +36,6 @@ def signup():
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
-        print(request.form.get('group-type'))
         join = True if request.form.get('group-type') == "Join" else False
         group = request.form.get('group')
         error = None
@@ -71,21 +70,24 @@ def add_user(email, id, name, group, join):
     if join:
       db.child('groups').child(group).update({
         id: {
-          'nickname': name
+          'nickname': name,
+          'tasks': {}
         }
       })
     else:
       db.child('groups').update({
         group: {
           id: {
-            'nickname': name
+            'nickname': name,
+            'tasks': {}
           }
         }
       })
     db.child('users').update({
       id: {
         'nickname': name,
-        'group': group
+        'group': group,
+        'tasks': {}
       }
     })
 

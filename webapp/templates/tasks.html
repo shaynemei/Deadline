@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="align-self-center">
+    <form method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="task">New Task</label>
+        <div class="d-flex">
+          <input class="form-control" id="task" name="task" required>
+          <input type="submit" class="btn btn-dark mb-5 mx-auto d-flex align-self-center" value="Add">
+        </div>
+      </div>
+    </form>
+
+    <div id="task-list">
+      <!-- <script>getTaskList('#task-list')</script> -->
+      <a href="javascript:getTaskList('#task-list');">link</a>
+    </div>
+    <script>
+      function getTaskList(elem){
+        console.log('gettasklist');
+        $.get('/tasks', (response) => {
+          $(elem).text(response);
+        });
+      }
+    </script>
+  </div>
+{% endblock %}
+
+<!-- https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiv-ajax -->
+{% block scripts %}
+  <script>
+    function getTaskList(elem){
+      console.log('gettasklist');
+      $.get('/tasks', (response) => {
+        $(elem).text(response);
+      });
+    }
+  </script>
+{% endblock %}
