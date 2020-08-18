@@ -94,6 +94,7 @@ def add_user(email, id, name, group, join):
 
 # Log in existing user
 def login(pb):
+    message = ""
     if request.method == "POST":
         email = request.form.get('email')
         password = request.form.get('password')
@@ -111,7 +112,8 @@ def login(pb):
                 return redirect(url_for('status'))
             except:
                 _, error, _ = sys.exc_info()
+                message = "Incorrect email or password, please try again."
 
-        flash(error)
+        # flash(error)
 
-    return render_template("login.html")
+    return render_template("login.html", message=message)

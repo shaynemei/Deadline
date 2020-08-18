@@ -13,28 +13,10 @@
     </form>
 
     <div id="task-list">
-      <!-- <script>getTaskList('#task-list')</script> -->
-      <a href="javascript:getTaskList('#task-list');">link</a>
+      <script>getTaskList('#task-list')</script>
+      <!-- <a href="javascript:getTaskList('#task-list');">link</a> -->
     </div>
-    <script>
-      function getTaskList(elem){
-        console.log('gettasklist');
-        $.get('/tasks', (response) => {
-          $(elem).text(response);
-        });
-      }
-    </script>
   </div>
 {% endblock %}
 
 <!-- https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiv-ajax -->
-{% block scripts %}
-  <script>
-    function getTaskList(elem){
-      console.log('gettasklist');
-      $.get('/tasks', (response) => {
-        $(elem).text(response);
-      });
-    }
-  </script>
-{% endblock %}
