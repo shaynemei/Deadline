@@ -1,5 +1,3 @@
-{% extends 'base.html' %}
-
 {% block content %}
   <div class="align-self-center">
     <form method="post" enctype="multipart/form-data">
@@ -13,7 +11,9 @@
     </form>
 
     <div id="task-list">
-      <script>getTaskList('#task-list')</script>
+      <div id="active-list"></div>
+      <div id="completed-list"></div>
+      <script>getTaskList('#active-list', '#completed-list')</script>
       <!-- <a href="javascript:getTaskList('#task-list');">link</a> -->
     </div>
   </div>

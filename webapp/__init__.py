@@ -59,3 +59,7 @@ def status():
 @app.route('/tasks', methods=["GET", "POST"])
 def tasks():
     return status_server.tasks()
+
+@app.route('/complete_task', methods=["GET", "POST"])
+def complete_task():
+  return status_server.complete_task()

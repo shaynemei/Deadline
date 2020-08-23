@@ -72,3 +72,25 @@ def tasks():
   print(all_tasks.val())
 
   return json.loads(json.dumps((all_tasks.val())))
+
+
+def complete_task():
+  try:
+    user = auth.verify_id_token(session['api_session_token'])
+    g.user = user
+  except:
+    return redirect(url_for("login"))
+  
+  nickname, group = get_info(user)
+  uid = user['user_id']
+  db = webapp.pb.database()
+
+  key = request.form.get("key")
+  print(request.form['key'])
+  db.child('groups').child(group).child(uid).child('tasks').child(key).update({
+    'completed': True
+  })
+  task = db.child('groups').child(group).child(uid).child('tasks').child(key).get()
+  print(task.val())
+  tasks()
+  return render_template("status.html")

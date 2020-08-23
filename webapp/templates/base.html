@@ -12,10 +12,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% block scripts %}
       <script>
-        function getTaskList(elem){
+        function getTaskList(active, completed){
           $.ajax({url: '/tasks', success: (response) => {
             console.log('success');
-            $(elem).text('');
+            $(active).append('<h2>Active</h2>');
+            $(completed).append('<h2>Completed</h2>');
             $.each(response, (key, val) => {
               let unix_timestamp = val.timestamp
               // Create a new JavaScript Date object based on the timestamp
@@ -37,24 +38,49 @@
               // Will display time in 10:30:23 format
               var formattedTime = dateString + ', ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
               
-              $(elem).append(`
-                <p>
-                  ${val.content}
-                  <ul>
-                    <li>completed: ${val.completed}</li>
-                    <li>timestamp: ${formattedTime}</li>
-                  </ul>
-                </p>
-                <br>
-              `);
+              var button = `<button type="button" class="btn btn-light" onclick="completeTask('${key}')">Done</button>`
+
+              if(!val.completed){
+                $(active).append(`
+                  <p id=${key}>
+                    ${val.content}
+                    <ul>
+                      <li>completed: ${val.completed}</li>
+                      <li>timestamp: ${formattedTime}</li>
+                    </ul>
+                    <button type="button" class="btn btn-light" onclick="completeTask('${key}')">Done</button>
+                  </p>
+                  <br>
+                `);
+              } else{
+                $(completed).append(`
+                  <p id=${key}>
+                    ${val.content}
+                    <ul>
+                      <li>completed: ${val.completed}</li>
+                      <li>timestamp: ${formattedTime}</li>
+                    </ul>
+                  </p>
+                  <br>
+                `);
+              }
+              
             })
           }});
+        }
+
+        function completeTask(key){
+          console.log('completeTask')
+          $.post('/complete_task', {key: key}, (response) => {
+
+          });
         }
       </script>
     {% endblock %}
   </head>
   <body>
     <div class="container">
+      {% include 'logo.html' %}
       {% block content %} {% endblock %}
     </div>
 
