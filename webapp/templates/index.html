@@ -1,1 +1,31 @@
 {% extends 'base.html' %}
+
+<!doctype html>
+<title>Deadline {% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+{% block content %}
+<nav>
+    {% if g.user %}
+      <h1>Deadline</h1>
+      <li><span>{{ g.user['email'] }}</span>
+      <li><a href="{{ url_for('logout') }}">Log Out</a>
+    {% else %}
+      <!-- <li><a href="{{ url_for('signup') }}">Sign up</a>
+      <li><a href="{{ url_for('login') }}">Log In</a> -->
+      {% include "landing.html" %}
+    {% endif %}
+</nav>
+<br></br>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+</section>
+
+
+{% endblock %}
+
