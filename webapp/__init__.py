@@ -8,12 +8,14 @@ from flask import session
 from flask import redirect
 from flask import url_for
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
 from . import db
 from . import auth_server
 from . import status_server
+from . import cronjobs
 
 import secrets
-
 
 # init the app instance
 app = Flask(__name__)
@@ -54,3 +56,9 @@ def logout():
 @app.route('/status', methods=["GET", "POST"])
 def status():
     return status_server.status(pb)
+
+
+scheduler = BackgroundScheduler()
+job_penalise = scheduler.add_job(cronjobs.penalise_overdue, trigger='interval', hours=1)
+job_reset = scheduler.add_job(cronjobs.hard_reset, trigger='cron', day_of_week="mon", hour=0, minute=0, second=0)
+scheduler.start()
