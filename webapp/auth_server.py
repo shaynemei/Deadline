@@ -36,7 +36,6 @@ def signup():
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
-        print(request.form.get('group-type'))
         join = True if request.form.get('group-type') == "Join" else False
         group = request.form.get('group')
         error = None
@@ -56,7 +55,7 @@ def signup():
             _, error, _ = sys.exc_info()
 
         if not error:
-            add_user(user.uid, nickname, group, join)
+            add_user(email, user.uid, nickname, group, join)
             return redirect(url_for("login"))
 
         # show error message
@@ -65,11 +64,11 @@ def signup():
     return render_template("signup.html")
 
 
-def add_user(id, name, group, join):
+def add_user(email, id, name, group, join):
     db = webapp.pb.database()
 
     if join:
-      db.child('groups').child(group).update({
+      db.child('groups').child(group).child('members').update({
         id: {
           'nickname': name
         }
@@ -77,15 +76,30 @@ def add_user(id, name, group, join):
     else:
       db.child('groups').update({
         group: {
-          id: {
-            'nickname': name
+          'members': {
+            id: {
+              'nickname': name
+            }
+          },
+          'resources': {
+            'water': 20,
+            'food': 20,
+            'metal': 20
           }
         }
       })
+    db.child('users').update({
+      id: {
+        'nickname': name,
+        'group': group,
+        'tasks': {}
+      }
+    })
 
 
 # Log in existing user
 def login(pb):
+    message = ""
     if request.method == "POST":
         email = request.form.get('email')
         password = request.form.get('password')
@@ -103,7 +117,8 @@ def login(pb):
                 return redirect(url_for('status'))
             except:
                 _, error, _ = sys.exc_info()
+                message = "Incorrect email or password, please try again."
 
-        flash(error)
+        # flash(error)
 
-    return render_template("login.html")
+    return render_template("login.html", message=message)

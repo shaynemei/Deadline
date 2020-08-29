@@ -4,5 +4,14 @@
 {% endblock %}
 
 {% block content %}
-    <h1>This is your status page!</h1>
+    <h1 class="mt-3">Hi, {{ nickname }}. This is your status page!</h1>
+    <h2>Group: {{ group }}</h2>
+    <br>
+    <h2>Resources:</h2>
+    <p>Water: {{ water }}</p>
+    <p>Food: {{ food }}</p>
+    <p>Metal: {{ metal }}</p>
+    <br>
+
+    {% include "tasks.html" %}
 {% endblock %}

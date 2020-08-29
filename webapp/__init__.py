@@ -53,4 +53,13 @@ def logout():
 @auth_server.check_token
 @app.route('/status', methods=["GET", "POST"])
 def status():
-    return status_server.status(pb)
+    return status_server.status()
+
+
+@app.route('/tasks', methods=["GET", "POST"])
+def tasks():
+    return status_server.tasks()
+
+@app.route('/complete_task', methods=["GET", "POST"])
+def complete_task():
+  return status_server.complete_task()
