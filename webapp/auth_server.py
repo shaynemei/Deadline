@@ -68,18 +68,23 @@ def add_user(email, id, name, group, join):
     db = webapp.pb.database()
 
     if join:
-      db.child('groups').child(group).update({
+      db.child('groups').child(group).child('members').update({
         id: {
-          'nickname': name,
-          'tasks': {}
+          'nickname': name
         }
       })
     else:
       db.child('groups').update({
         group: {
-          id: {
-            'nickname': name,
-            'tasks': {}
+          'members': {
+            id: {
+              'nickname': name
+            }
+          },
+          'resources': {
+            'water': 20,
+            'food': 20,
+            'metal': 20
           }
         }
       })
