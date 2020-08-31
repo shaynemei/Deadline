@@ -115,4 +115,4 @@ def complete_task():
 
   # get page to update when this method finishes
   tasks()
-  return render_template("status.html")
+  return key
