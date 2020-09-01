@@ -98,8 +98,15 @@
                   <br>
                 </div>
               `);
+              $('#water').remove();
+              $('#food').remove();
+              $('#metal').remove();
+              $('#resources').append(`
+                <p id='water'>Water: ${response['water']}</p>
+                <p id='food'>Food: ${response['food']}</p>
+                <p id='metal'>Metal: ${response['metal']}</p>
+              `);
             },
-            dataType: 'text',
             error: () => {
             },
             complete: () => {
