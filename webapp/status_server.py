@@ -96,23 +96,32 @@ def complete_task():
     'completed': True
   })
 
+
+  water = db.child('groups').child(group).child('resources').child('water').get().val()
+  food = db.child('groups').child(group).child('resources').child('food').get().val()
+  metal = db.child('groups').child(group).child('resources').child('metal').get().val()
   resource = random.randint(0, 2)
   if resource == 0:
-    water = db.child('groups').child(group).child('resources').child('water').get().val()
     db.child('groups').child(group).child('resources').update({
       'water': water + 10
     })
+    water = water + 10
   if resource == 1:
-    food = db.child('groups').child(group).child('resources').child('food').get().val()
     db.child('groups').child(group).child('resources').update({
       'food': food + 10
     })
+    food = food + 10
   if resource == 2:
-    metal = db.child('groups').child(group).child('resources').child('metal').get().val()
     db.child('groups').child(group).child('resources').update({
       'metal': metal + 10
     })
+    metal = metal + 10
 
   # get page to update when this method finishes
   tasks()
-  return key
+  return {
+    'key': key, 
+    'water': water, 
+    'food': food,
+    'metal': metal
+  }
