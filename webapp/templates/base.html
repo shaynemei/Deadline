@@ -14,7 +14,6 @@
       <script>
         function getTaskList(active, completed){
           $.ajax({url: '/tasks', success: (response) => {
-            console.log('success');
             $(active).append('<h2>Active</h2>');
             $(completed).append('<h2>Completed</h2>');
             $.each(response, (key, val) => {
@@ -42,26 +41,30 @@
 
               if(!val.completed){
                 $(active).append(`
-                  <p id=${key}>
-                    ${val.content}
-                    <ul>
-                      <li>completed: ${val.completed}</li>
-                      <li>timestamp: ${formattedTime}</li>
-                    </ul>
-                    <button type="button" class="btn btn-light" onclick="completeTask('${key}')">Done</button>
-                  </p>
-                  <br>
+                  <div id=${key}>
+                    <p>
+                      ${val.content}
+                      <ul>
+                        <li>completed: ${val.completed}</li>
+                        <li>timestamp: ${formattedTime}</li>
+                      </ul>
+                      <button type="button" class="btn btn-light" onclick="completeTask('${key}', '${val.content}', '${val.completed}', '${formattedTime}', '${completed}')">Done</button>
+                    </p>
+                    <br>
+                  </div>
                 `);
               } else{
                 $(completed).append(`
-                  <p id=${key}>
-                    ${val.content}
-                    <ul>
-                      <li>completed: ${val.completed}</li>
-                      <li>timestamp: ${formattedTime}</li>
-                    </ul>
-                  </p>
-                  <br>
+                  <div id=${key}>
+                    <p>
+                      ${val.content}
+                      <ul>
+                        <li>completed: ${val.completed}</li>
+                        <li>timestamp: ${formattedTime}</li>
+                      </ul>
+                    </p>
+                    <br>
+                  </div>
                 `);
               }
               
@@ -69,10 +72,38 @@
           }});
         }
 
-        function completeTask(key){
-          console.log('completeTask')
-          $.post('/complete_task', {key: key}, (response) => {
+        // function completeTask(key){
+        //   console.log('completeTask')
+        //   $.post('/complete_task', {key: key}, (response) => {
 
+        //   });
+        // }
+
+        function completeTask(key, content, compBool, time, completed){
+          $('#' + key).remove();
+          $.ajax({
+            type: 'POST',
+            url: '/complete_task',
+            data: {key: key},
+            success: (response) => {
+              $(completed).append(`
+                <div id=${key}>
+                  <p>
+                    ${content}
+                    <ul>
+                      <li>completed: true</li>
+                      <li>timestamp: ${time}</li>
+                    </ul>
+                  </p>
+                  <br>
+                </div>
+              `);
+            },
+            dataType: 'text',
+            error: () => {
+            },
+            complete: () => {
+            }
           });
         }
       </script>
