@@ -20,6 +20,16 @@ Install requirements
 pip install -r requirements.txt
 ```
 
+## Set Config for Firebase
+1. Go to Firebase console for the project
+2. Go to `Settings -> General`  
+3. Scroll down to `Firebase SDK snippet`
+4. Select `Config` and save the scripts as `firebaseConfig.json` in project root following the format of `firebaseConfig_sample.json`
+5. Go to `Settings -> Service accounts`
+6. Go to `Firebase Admin SDK` tab
+7. Scroll down and select `Generate new private key`
+8. Save the file in project root folder as `firebaseAdminConfig.json` following the format of `firebaseAdminConfig_sample.json`
+
 ## Run local development
 1. Make sure it is executable
 ```
