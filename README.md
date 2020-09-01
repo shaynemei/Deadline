@@ -43,3 +43,8 @@ chmod +x run_tests.sh
 ```
 
 Go to `./htmlconv/index.html` for an interactive coverage report.
+
+## Cronjobs
+
+- Since deployment, one cronjob checks for overdue tasks every hour and penalises the group (-5 units of random resources) the user with the overdue task belongs to.
+- Since deployment, one cronjob removes all completed and non-completed tasks (hard reset) every Monday at 00:00, timezone set to system timezone at deployment.
