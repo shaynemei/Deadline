@@ -96,6 +96,7 @@ def update_resource(ind, val=10):
   for resource in RESOURCES:
     resource_dict[resource] = get_resource(resource) 
 
+  print(resource_dict)
   return resource_dict
 
 
