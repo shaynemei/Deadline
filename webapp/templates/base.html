@@ -40,30 +40,62 @@
               var button = `<button type="button" class="btn btn-light" onclick="completeTask('${key}')">Done</button>`
 
               if(!val.completed){
+                // $(active).append(`
+                //   <div id=${key}>
+                //     <p>
+                //       ${val.content}
+                //       <ul>
+                //         <li>timestamp: ${formattedTime}</li>
+                //       </ul>
+                //       <button type="button" class="btn btn-dark" onclick="completeTask('${key}', '${val.content}', '${val.completed}', '${formattedTime}', '${completed}')">Done</button>
+                //     </p>
+                //     <br>
+                //   </div>
+                // `);
                 $(active).append(`
-                  <div id=${key}>
-                    <p>
-                      ${val.content}
-                      <ul>
-                        <li>completed: ${val.completed}</li>
-                        <li>timestamp: ${formattedTime}</li>
-                      </ul>
-                      <button type="button" class="btn btn-light" onclick="completeTask('${key}', '${val.content}', '${val.completed}', '${formattedTime}', '${completed}')">Done</button>
-                    </p>
+                  <div class="mt-4" id=${key}>
+                    <div class="row">
+
+                      <div class="col-md-6">
+                        <p>
+                          ${val.content}
+                        </p>
+                      </div>
+                      <!-- /.col-md-6 -->
+                      <div class="col-md-6 text-left">
+                        <div style="display:block; width: 100%;" class="text-left">
+                          Date/Time Created: ${formattedTime}
+                        </div>
+                      </div>
+                      <!-- /.col-md-6 -->
+                    </div>
+                    <button type="button" class="btn btn-dark" onclick="completeTask('${key}', '${val.content}', '${val.completed}', '${formattedTime}', '${completed}')">Done</button>
+
                     <br>
+                    <hr>
                   </div>
                 `);
               } else{
                 $(completed).append(`
-                  <div id=${key}>
-                    <p>
-                      ${val.content}
-                      <ul>
-                        <li>completed: ${val.completed}</li>
-                        <li>timestamp: ${formattedTime}</li>
-                      </ul>
-                    </p>
+                  <div class="mt-4" id=${key}>
+                    <div class="row">
+
+                      <div class="col-md-6">
+                        <p>
+                          ${val.content}
+                        </p>
+                      </div>
+                      <!-- /.col-md-6 -->
+                      <div class="col-md-6 text-left">
+                        <div style="display:block; width: 100%;" class="text-left">
+                          Date/Time Created: ${formattedTime}
+                        </div>
+                      </div>
+                      <!-- /.col-md-6 -->
+                    </div>
+
                     <br>
+                    <hr>
                   </div>
                 `);
               }
@@ -87,25 +119,30 @@
             data: {key: key},
             success: (response) => {
               $(completed).append(`
-                <div id=${key}>
-                  <p>
-                    ${content}
-                    <ul>
-                      <li>completed: true</li>
-                      <li>timestamp: ${time}</li>
-                    </ul>
-                  </p>
-                  <br>
-                </div>
+                <div class="mt-4" id=${key}>
+                    <div class="row">
+
+                      <div class="col-md-6">
+                        <p>
+                          ${content}
+                        </p>
+                      </div>
+                      <!-- /.col-md-6 -->
+                      <div class="col-md-6 text-left">
+                        <div style="display:block; width: 100%;" class="text-left">
+                          Date/Time Created: ${time}
+                        </div>
+                      </div>
+                      <!-- /.col-md-6 -->
+                    </div>
+
+                    <br>
+                    <hr>
+                  </div>
               `);
-              $('#water').remove();
-              $('#food').remove();
-              $('#metal').remove();
-              $('#resources').append(`
-                <p id='water'>Water: ${response['water']}</p>
-                <p id='food'>Food: ${response['food']}</p>
-                <p id='metal'>Metal: ${response['metal']}</p>
-              `);
+              $('#water').text(`${response['water']}`);
+              $('#food').text(`${response['food']}`);
+              $('#metal').text(`${response['metal']}`);
             },
             error: () => {
             },
